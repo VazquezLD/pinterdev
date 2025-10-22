@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route, Outlet } from 'react-router-dom';
 import Home from './pages/Home/Home';
 import Profile from './pages/Profile/Profile';
+import { UserCollectionsProvider } from './context/UserColectionsContext';
 //import CollectionDetailPage from './pages/CollectionDetailPage';
 import {AppWrapper, ContentWrapper} from './styles/AppWrapper'
 import RegisterPage from './pages/Login/Register';
@@ -18,17 +19,19 @@ const AppLayout = () => (
 
 export function App() {
   return (
-    <BrowserRouter>
+    <UserCollectionsProvider>
+      <BrowserRouter>
       <Routes>
         <Route path="/" element={<AppLayout />}>
           <Route index element={<Home/>}/>
+          <Route path='/profile' element={<Profile/>}/>
         </Route>
-        <Route path='/profile' element={<Profile/>}/>
         <Route path='/register' element={<RegisterPage/>}/>
         <Route path="/login" element={<LoginPage/>} />
       
       </Routes>
     </BrowserRouter>
+    </UserCollectionsProvider>
   );
 }
 

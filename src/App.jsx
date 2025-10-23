@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route, Outlet } from 'react-router-dom';
 import Home from './pages/Home/Home';
 import Profile from './pages/Profile/Profile';
 import { UserCollectionsProvider } from './context/UserColectionsContext';
-//import CollectionDetailPage from './pages/CollectionDetailPage';
+
 import {AppWrapper, ContentWrapper} from './styles/AppWrapper'
 import RegisterPage from './pages/Login/Register';
 import MenuBar from './components/MenuBar';
@@ -25,6 +25,7 @@ export function App() {
         <Route path="/" element={<AppLayout />}>
           <Route index element={<Home/>}/>
           <Route path='/profile' element={<Profile/>}/>
+          
         </Route>
         <Route path='/register' element={<RegisterPage/>}/>
         <Route path="/login" element={<LoginPage/>} />

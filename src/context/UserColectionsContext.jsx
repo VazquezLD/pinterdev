@@ -10,9 +10,9 @@ export const UserCollectionsProvider = ({ children }) => {
   const fetchCollections = useCallback(async () => {
     const token = localStorage.getItem("token");
         if (!token) {
-        setError("No hay token de autenticación");
-        setLoading(false);
-        return;
+          setError("No hay token de autenticación");
+          setLoading(false);
+          return;
         }
 
         try {

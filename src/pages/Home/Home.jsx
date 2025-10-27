@@ -4,6 +4,7 @@ import axios from 'axios';
 import PhotoCard from '../../components/PhotoCard';
 import Spinner from '../../components/Spinner';
 import SearchBar from '../../components/SearchBar';
+import CollectionsPopUp from '../../components/CollectionsPopUp';
 
 const PhotoGrid = styled.div`
   column-count: 4;
@@ -17,6 +18,8 @@ const PhotoGrid = styled.div`
 `;
 
 const HomePage = () => {
+  
+  const [showPopup, setShowPopup] = useState(false);
   const [photos, setPhotos] = useState([]);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
@@ -93,7 +96,8 @@ const HomePage = () => {
       {error && <p style={{ textAlign: 'center' }}>{error}</p>}
 
       <PhotoGrid>
-        {photos.map(photo => (<PhotoCard key={photo.id} photo={photo} />))}
+        {photos.map(photo => (<PhotoCard key={photo.id} photo={photo} setShowPopup={setShowPopup}/>))}
+        {showPopup && (<CollectionsPopUp onClose={() => setShowPopup(false)} />)}
       </PhotoGrid>
 
       {loading && photos.length > 0 && <Spinner />}

@@ -2,11 +2,11 @@ import { BrowserRouter, Routes, Route, Outlet } from 'react-router-dom';
 import Home from './pages/Home/Home';
 import Profile from './pages/Profile/Profile';
 import { UserCollectionsProvider } from './context/UserColectionsContext';
-
 import {AppWrapper, ContentWrapper} from './styles/AppWrapper'
 import RegisterPage from './pages/Login/Register';
 import MenuBar from './components/MenuBar';
 import LoginPage from './pages/Login/LoginComponent';
+import {AddPhotoProvider} from './context/AddPhotoContext';
 
 const AppLayout = () => (
   <AppWrapper>
@@ -20,18 +20,20 @@ const AppLayout = () => (
 export function App() {
   return (
     <UserCollectionsProvider>
-      <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<AppLayout />}>
-          <Route index element={<Home/>}/>
-          <Route path='/profile' element={<Profile/>}/>
+      <AddPhotoProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<AppLayout />}>
+              <Route path='/' element={<Home/>}/>
+              <Route path='/profile' element={<Profile/>}/>
+              
+            </Route>
+            <Route path='/register' element={<RegisterPage/>}/>
+            <Route path="/login" element={<LoginPage/>} />
           
-        </Route>
-        <Route path='/register' element={<RegisterPage/>}/>
-        <Route path="/login" element={<LoginPage/>} />
-      
-      </Routes>
-    </BrowserRouter>
+          </Routes>
+        </BrowserRouter>
+      </AddPhotoProvider>
     </UserCollectionsProvider>
   );
 }

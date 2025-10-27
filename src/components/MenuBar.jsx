@@ -9,7 +9,8 @@ const MenuBar = () => {
     return(
         <MenuBarStyled>
             <ul>
-                <li><BsHouse /></li>
+                <li><Link to={"/"}><BsHouse/></Link></li>
+                
                 <li><PiSquaresFourThin/></li>
                 
                 <li><Link to={"/profile"}><IoPersonOutline/></Link></li>

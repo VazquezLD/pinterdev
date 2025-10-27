@@ -1,6 +1,7 @@
 import styled, { keyframes } from 'styled-components';
 import { HiOutlineDotsHorizontal } from "react-icons/hi";
 import { CiBookmark } from "react-icons/ci";
+import { useAddPhoto } from "../context/AddPhotoContext";
 
 const fadeIn = keyframes`
   from {
@@ -66,7 +67,8 @@ const PhotoImg = styled.img`
   display: block;
 `;
 
-const PhotoCard = ({ photo }) => {
+const PhotoCard = ({photo, setShowPopup}) => {
+  const {setPhotoId} = useAddPhoto()
   if (!photo || !photo.urls) {
     return null;
   }
@@ -76,7 +78,7 @@ const PhotoCard = ({ photo }) => {
       <PhotoImg src={photo.urls.regular} alt={photo.alt_description} />
       <ButtonsContainer>
         <ButtonContainer>
-          <CiBookmark/>
+          <CiBookmark onClick={() => {setShowPopup(true), setPhotoId(photo.id)}}/>
         </ButtonContainer>
         <ButtonContainer>
           <HiOutlineDotsHorizontal/>

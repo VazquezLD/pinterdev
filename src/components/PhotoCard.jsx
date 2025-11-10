@@ -2,6 +2,7 @@ import styled, { keyframes } from 'styled-components';
 import { HiOutlineDotsHorizontal } from "react-icons/hi";
 import { CiBookmark } from "react-icons/ci";
 import { useAddPhoto } from "../context/AddPhotoContext";
+import { useNavigate } from 'react-router-dom';
 
 const fadeIn = keyframes`
   from {
@@ -68,6 +69,12 @@ const PhotoImg = styled.img`
 `;
 
 const PhotoCard = ({photo, setShowPopup}) => {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate(`/photo/${photo.id}`, { state: { photo } });
+  };
+
   const {setPhotoId} = useAddPhoto()
   if (!photo || !photo.urls) {
     return null;
@@ -75,7 +82,7 @@ const PhotoCard = ({photo, setShowPopup}) => {
   
   return (
     <CardWrapper>
-      <PhotoImg src={photo.urls.regular} alt={photo.alt_description} />
+      <PhotoImg src={photo.urls.regular} alt={photo.alt_description} onClick={handleClick}/>
       <ButtonsContainer>
         <ButtonContainer>
           <CiBookmark onClick={() => {setShowPopup(true), setPhotoId(photo.id)}}/>

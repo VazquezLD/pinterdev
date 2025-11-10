@@ -8,6 +8,7 @@ import MenuBar from './components/MenuBar';
 import LoginPage from './pages/Login/LoginComponent';
 import {AddPhotoProvider} from './context/AddPhotoContext';
 import ProtectedRoute from './components/ProtectedRoute';
+import PhotoPage from './pages/Home/PhotoPage';
 
 const AppLayout = () => (
   <AppWrapper>
@@ -28,6 +29,7 @@ export function App() {
             <Route element={<ProtectedRoute/>}>
               <Route path="/" element={<AppLayout />}>
                 <Route path='/' element={<Home/>}/>
+                <Route path='/photo/:id' element={<PhotoPage/>}></Route>
                 <Route path='/collections' element={<Profile/>}/>
               </Route>
             </Route>
@@ -46,5 +48,4 @@ export default App;
 
 
 {/*<Route path="profile/:userId" element={<ProfilePage />} />}
-{/*<Route path="search" element={<SearchPage />} />}
 {/*<Route path="collection/:collectionId" element={<CollectionDetailPage />} */}

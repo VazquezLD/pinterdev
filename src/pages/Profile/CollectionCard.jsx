@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import Spinner from "../../components/Spinner";
-import { HiOutlineDotsHorizontal } from "react-icons/hi";
+import { BsTrash } from "react-icons/bs";
 
 const CollectionCardStyled = styled.div`
   position: relative;
@@ -15,7 +15,7 @@ const CollectionCardStyled = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-
+  width: 200px;
   &:hover {
     transform: translateY(-4px);
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
@@ -60,9 +60,12 @@ const CollectionCardStyled = styled.div`
     font-size: 1rem;
     text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
   }
-
+  .icons{
+    display: flex;
+    gap: 5px;
+  }
   .footer .dots {
-    font-size: 1.3rem;
+    font-size: 1.2rem;
     cursor: pointer;
     transition: opacity 0.2s ease;
     border-radius: 100%;
@@ -75,28 +78,23 @@ const CollectionCardStyled = styled.div`
   }
 `;
 
-
-
 const PortadaImage = styled.img`
     width: 100%;
-    
     object-fit: cover;
 `;
 
-const CollectionCard = ({ title, photoId }) => {
+const CollectionCard = ({ title, photoId, setClicked, setIdToDelete, id}) => {
+    
     const [imageUrl, setImageUrl] = useState('');
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        
         const fetchPortada = async () => {
             setLoading(true);
             setError(null);
             try {
-               
                 // Se que la key deberia estar oculta pero es un proyecto de portfolio... Ademas es una API gratuita.
-
                 const accessKey = 'HSk-TwxnSZsDrnRdsNu1KPGHsZMwQz1Hay_h6_J95go';
                 const response = await fetch(`https://api.unsplash.com/photos/${photoId}`, {
                     headers: {
@@ -135,9 +133,9 @@ const CollectionCard = ({ title, photoId }) => {
         return <CollectionCardStyled>Error: {error}</CollectionCardStyled>;
     }
 
-    
     return (
-        <CollectionCardStyled>
+        <>
+            <CollectionCardStyled>
             {imageUrl ? (
                 <PortadaImage src={imageUrl} alt={`Portada de ${title}`} />
             ) : (
@@ -145,10 +143,13 @@ const CollectionCard = ({ title, photoId }) => {
             )}
             <div className="footer">
                 <span>{title}</span>
-                <HiOutlineDotsHorizontal className="dots" />
+                <div className="icons">
+                    <BsTrash className="dots" onClick={() => {setClicked(true); 
+                    setIdToDelete(id)}}/>
+                </div>
             </div>
-        </CollectionCardStyled>
-
+            </CollectionCardStyled>
+        </>
     );
 };
 

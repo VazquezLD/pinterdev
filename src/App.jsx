@@ -7,6 +7,7 @@ import RegisterPage from './pages/Login/Register';
 import MenuBar from './components/MenuBar';
 import LoginPage from './pages/Login/LoginComponent';
 import {AddPhotoProvider} from './context/AddPhotoContext';
+import ProtectedRoute from './components/ProtectedRoute';
 
 const AppLayout = () => (
   <AppWrapper>
@@ -23,11 +24,14 @@ export function App() {
       <AddPhotoProvider>
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<AppLayout />}>
-              <Route path='/' element={<Home/>}/>
-              <Route path='/profile' element={<Profile/>}/>
-              
+
+            <Route element={<ProtectedRoute/>}>
+              <Route path="/" element={<AppLayout />}>
+                <Route path='/' element={<Home/>}/>
+                <Route path='/collections' element={<Profile/>}/>
+              </Route>
             </Route>
+            
             <Route path='/register' element={<RegisterPage/>}/>
             <Route path="/login" element={<LoginPage/>} />
           

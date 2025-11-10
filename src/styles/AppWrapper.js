@@ -5,7 +5,7 @@ export const AppWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   min-height: 100vh;
-  background-color: #232425ff;
+  background-color: #19191aff;
 `;
 
 export const ContentWrapper = styled.main`

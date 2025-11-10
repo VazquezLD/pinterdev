@@ -11,9 +11,9 @@ const MenuBar = () => {
             <ul>
                 <li><Link to={"/"}><BsHouse/></Link></li>
                 
-                <li><PiSquaresFourThin/></li>
+                <li><Link to={"/collections"}><PiSquaresFourThin/></Link></li>
                 
-                <li><Link to={"/profile"}><IoPersonOutline/></Link></li>
+                <li><Link to={"/"}><IoPersonOutline/></Link></li>
                 
                 <li><GoGear/></li>
             </ul>

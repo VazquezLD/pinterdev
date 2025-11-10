@@ -5,6 +5,7 @@ import PhotoCard from '../../components/PhotoCard';
 import Spinner from '../../components/Spinner';
 import SearchBar from '../../components/SearchBar';
 import CollectionsPopUp from '../../components/CollectionsPopUp';
+import CategoryBar from './TopicBar';
 
 const PhotoGrid = styled.div`
   column-count: 4;
@@ -16,6 +17,13 @@ const PhotoGrid = styled.div`
   @media (max-width: 768px) { column-count: 2; }
   @media (max-width: 480px) { column-count: 1; }
 `;
+const ContainerStyled = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+`
 
 const HomePage = () => {
   
@@ -91,7 +99,10 @@ const HomePage = () => {
 
   return (
     <>
-      <SearchBar onSearch={handleSearch} />
+      <ContainerStyled>
+        <SearchBar onSearch={handleSearch} />
+        <CategoryBar/>
+      </ContainerStyled>
       {loading && photos.length === 0 && <Spinner />}
       {error && <p style={{ textAlign: 'center' }}>{error}</p>}
 

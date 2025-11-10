@@ -1,5 +1,5 @@
 import { Group, Input, SearchIcon } from '../styles/SearchImages';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 
 const SearchSchema = Yup.object().shape({

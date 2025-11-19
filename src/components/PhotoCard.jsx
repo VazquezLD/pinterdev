@@ -2,7 +2,7 @@ import styled, { keyframes } from 'styled-components';
 import { HiOutlineDotsHorizontal } from "react-icons/hi";
 import { CiBookmark } from "react-icons/ci";
 import { useAddPhoto } from "../context/AddPhotoContext";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const fadeIn = keyframes`
   from {
@@ -42,6 +42,8 @@ const ButtonsContainer = styled.div`
   background-color: #0000006a;
   padding: 2px;
   border-radius: 20px;
+  align-items: center;
+  justify-content: center;
 `
 
 const ButtonContainer = styled.div`
@@ -50,8 +52,7 @@ const ButtonContainer = styled.div`
     border-radius: 0;
     background-color: transparent;
     color: white;
-    margin-left: 5px;
-
+    padding: 2px;
 
     &:hover {
       border-radius: 100%;
@@ -68,7 +69,9 @@ const PhotoImg = styled.img`
   display: block;
 `;
 
-const PhotoCard = ({photo, setShowPopup}) => {
+const PhotoCard = ({photo, setShowPopup, setShowPopUpdelete, setPhotoIdToDelete}) => {
+  const location = useLocation();
+  const showDots = location.pathname.startsWith("/collections");
   const navigate = useNavigate();
 
   const handleClick = () => {
@@ -87,9 +90,11 @@ const PhotoCard = ({photo, setShowPopup}) => {
         <ButtonContainer>
           <CiBookmark onClick={() => {setShowPopup(true), setPhotoId(photo.id)}}/>
         </ButtonContainer>
-        <ButtonContainer>
-          <HiOutlineDotsHorizontal/>
-        </ButtonContainer>
+        {showDots && (
+          <ButtonContainer>
+            <HiOutlineDotsHorizontal onClick={() => {setShowPopUpdelete(true), setPhotoIdToDelete(photo.id)}}/>
+          </ButtonContainer>
+        )}
       </ButtonsContainer>
     </CardWrapper>
   );

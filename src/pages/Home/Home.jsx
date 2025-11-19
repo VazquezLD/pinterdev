@@ -58,7 +58,6 @@ const HomePage = () => {
         params: params,
       });
       
-      console.log(response.data)
       const newPhotos = isSearching ? response.data.results : response.data;
       setPhotos(prevPhotos => {
         const allPhotos = page === 1 ? newPhotos : [...prevPhotos, ...newPhotos];

@@ -9,6 +9,7 @@ import LoginPage from './pages/Login/LoginComponent';
 import {AddPhotoProvider} from './context/AddPhotoContext';
 import ProtectedRoute from './components/ProtectedRoute';
 import PhotoPage from './pages/Home/PhotoPage';
+import CollectionPage from './pages/Profile/CollectionPage';
 
 const AppLayout = () => (
   <AppWrapper>
@@ -30,6 +31,7 @@ export function App() {
               <Route path="/" element={<AppLayout />}>
                 <Route path='/' element={<Home/>}/>
                 <Route path='/photo/:id' element={<PhotoPage/>}></Route>
+                <Route path="/collections/:id" element={<CollectionPage/>}></Route>
                 <Route path='/collections' element={<Profile/>}/>
               </Route>
             </Route>

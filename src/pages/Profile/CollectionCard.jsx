@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import Spinner from "../../components/Spinner";
 import { BsTrash } from "react-icons/bs";
+import { useNavigate } from "react-router-dom";
 
 const CollectionCardStyled = styled.div`
   position: relative;
@@ -16,6 +17,7 @@ const CollectionCardStyled = styled.div`
   align-items: center;
   justify-content: center;
   width: 200px;
+
   &:hover {
     transform: translateY(-4px);
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
@@ -60,16 +62,17 @@ const CollectionCardStyled = styled.div`
     font-size: 1rem;
     text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
   }
-  .icons{
+
+  .icons {
     display: flex;
     gap: 5px;
   }
+
   .footer .dots {
     font-size: 1.2rem;
     cursor: pointer;
-    transition: opacity 0.2s ease;
-    border-radius: 100%;
     transition: all 0.3s ease;
+    border-radius: 100%;
   }
 
   .footer .dots:hover {
@@ -79,78 +82,74 @@ const CollectionCardStyled = styled.div`
 `;
 
 const PortadaImage = styled.img`
-    width: 100%;
-    object-fit: cover;
+  width: 100%;
+  object-fit: cover;
 `;
 
-const CollectionCard = ({ title, photoId, setClicked, setIdToDelete, id}) => {
-    
-    const [imageUrl, setImageUrl] = useState('');
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+const CollectionCard = ({ collection, setClicked, setIdToDelete }) => {
+  const [imageUrl, setImageUrl] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-    useEffect(() => {
-        const fetchPortada = async () => {
-            setLoading(true);
-            setError(null);
-            try {
-                // Se que la key deberia estar oculta pero es un proyecto de portfolio... Ademas es una API gratuita.
-                const accessKey = 'HSk-TwxnSZsDrnRdsNu1KPGHsZMwQz1Hay_h6_J95go';
-                const response = await fetch(`https://api.unsplash.com/photos/${photoId}`, {
-                    headers: {
-                        Authorization: `Client-ID ${accessKey}`
-                    }
-                });
+  const navigate = useNavigate();
 
-                if (!response.ok) {
-                    throw new Error(`Error ${response.status}: No se pudo obtener la foto`);
-                }
+  const handleClick = () => {
+    navigate(`/collections/${collection._id}`);
+  };
 
-                const data = await response.json();
-                setImageUrl(data.urls.small);
+  const handleDelete = (e) => {
+    e.stopPropagation();
+    setClicked(true);
+    setIdToDelete(collection._id);
+  };
 
-            } catch (err) {
-                console.error("Error fetching portada:", err);
-                setError(err.message);
-            } finally {
-                setLoading(false);
-            }
-        };
+  useEffect(() => {
+    const fetchPortada = async () => {
+      if (!collection.fotos || collection.fotos.length === 0) {
+        setImageUrl("");
+        setLoading(false);
+        return;
+      }
 
-        if (photoId) {
-            fetchPortada();
-        } else {
-            setLoading(false);
-        }
+      setLoading(true);
+      setError(null);
 
-    }, [photoId]);
+      try {
+        const accessKey = "HSk-TwxnSZsDrnRdsNu1KPGHsZMwQz1Hay_h6_J95go";
+        const response = await fetch(
+          `https://api.unsplash.com/photos/${collection.fotos[0]}`,
+          { headers: { Authorization: `Client-ID ${accessKey}` } }
+        );
 
-    if (loading) {
-        return <Spinner></Spinner>
-    }
+        if (!response.ok) throw new Error("No se pudo obtener la foto");
 
-    if (error) {
-        return <CollectionCardStyled>Error: {error}</CollectionCardStyled>;
-    }
+        const data = await response.json();
+        setImageUrl(data.urls.small);
+      } catch (err) {
+        console.error("Error fetching portada:", err);
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-    return (
-        <>
-            <CollectionCardStyled>
-            {imageUrl ? (
-                <PortadaImage src={imageUrl} alt={`Portada de ${title}`} />
-            ) : (
-                <p>Sin portada</p>
-            )}
-            <div className="footer">
-                <span>{title}</span>
-                <div className="icons">
-                    <BsTrash className="dots" onClick={() => {setClicked(true); 
-                    setIdToDelete(id)}}/>
-                </div>
-            </div>
-            </CollectionCardStyled>
-        </>
-    );
+    fetchPortada();
+  }, [collection.fotos]);
+
+  if (loading) return <Spinner />;
+  if (error) return <CollectionCardStyled>Error: {error}</CollectionCardStyled>;
+
+  return (
+    <CollectionCardStyled onClick={handleClick}>
+      {imageUrl ? <PortadaImage src={imageUrl} alt={`Portada de ${collection.titulo}`} /> : <p>Sin portada</p>}
+      <div className="footer">
+        <span>{collection.titulo}</span>
+        <div className="icons">
+          <BsTrash className="dots" onClick={handleDelete} />
+        </div>
+      </div>
+    </CollectionCardStyled>
+  );
 };
 
 export default CollectionCard;

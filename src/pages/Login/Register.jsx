@@ -9,8 +9,12 @@ export const FormWrapper = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center; 
-    justify-content: center; 
+    gap: 20px;
+    justify-content: center;
     height: 100vh;
+    & h2{
+      color: black;
+    }
 `;
 export const StyledForm = styled(Form)`
   display: flex; 
@@ -31,7 +35,7 @@ export const StyledButton = styled.button`
   padding: 10px; 
   border-radius: 5px; 
   border: none; 
-  background-color: #007bff; 
+  background-color: #35414e; 
   color: white; 
   cursor: pointer;
 `;

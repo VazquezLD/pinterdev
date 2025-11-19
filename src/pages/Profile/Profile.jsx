@@ -7,6 +7,7 @@ import { useAuth } from "../../context/AuthContext";
 import axios from "axios";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
+import { ProfileCard } from "./ProfileCard";
 
 const fadeIn = keyframes`
   from { opacity: 0; transform: scale(0.96); }
@@ -208,6 +209,7 @@ const Profile = () => {
 
   return (
     <>
+    <ProfileCard/>
       <h2>Tus Colecciones 📂</h2>
       <ButtonContainer>
         <Button onClick={() => setFormCol(true)}>Agregar colección</Button>

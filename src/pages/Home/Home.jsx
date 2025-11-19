@@ -100,7 +100,7 @@ const HomePage = () => {
     <>
       <ContainerStyled>
         <SearchBar onSearch={handleSearch} />
-        <CategoryBar/>
+        <CategoryBar onSearch={handleSearch}/>
       </ContainerStyled>
       {loading && photos.length === 0 && <Spinner />}
       {error && <p style={{ textAlign: 'center' }}>{error}</p>}

@@ -32,13 +32,13 @@ const CategoryButton = styled.button`
   }
 `;
 
-const CategoryBar = () => {
+const CategoryBar = ({ onSearch }) => {
   const categories = ["Tech", "Cine", "Música", "Arte", "Deportes", "Argentina", "Naturaleza", "Otros"];
 
   return (
     <ButtonContainer>
       {categories.map((cat) => (
-        <CategoryButton key={cat}>{cat}</CategoryButton>
+        <CategoryButton key={cat} onClick={() => onSearch(cat)}>{cat}</CategoryButton>
       ))}
     </ButtonContainer>
   );

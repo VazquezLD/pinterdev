@@ -100,12 +100,11 @@ const PhotoGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 10px;
-  justify-items: center;
+  justify-items: start;
   align-items: center;
   width: 100%;
   max-width: 1200px;
   margin-top: 5px;
-  color: white;
 `;
 
 const Input = styled(Field)`

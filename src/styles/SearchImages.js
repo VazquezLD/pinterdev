@@ -26,8 +26,11 @@ export const Input = styled.input`
   &:hover {
     box-shadow: 0 0 0 2.5px #2f303d, 0px 0px 25px -15px #000;
   }
-
   
+  @media (max-width: 480px){
+    width: 100%;
+    margin: 0;
+  }
 `;
 
 export const SearchIcon = styled.svg`

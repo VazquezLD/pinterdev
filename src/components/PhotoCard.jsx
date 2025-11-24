@@ -30,6 +30,8 @@ const CardWrapper = styled.div`
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
     cursor: pointer;
   }
+
+  @media (max-width: 480px) { width:60%; }
 `;
 
 const ButtonsContainer = styled.div`

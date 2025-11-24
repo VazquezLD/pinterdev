@@ -15,14 +15,29 @@ const PhotoGrid = styled.div`
   
   @media (max-width: 1200px) { column-count: 3; }
   @media (max-width: 768px) { column-count: 2; }
-  @media (max-width: 480px) { column-count: 1; }
+  @media (max-width: 480px) {
+      display: flex;
+      flex-direction:column;
+      column-count: 1; 
+      align-items: center;
+      justify-content: center;
+      margin-top: 140px;
+  }
 `;
+
 const ContainerStyled = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  width: 100%;
+  min-width: 90%;
+  
+  @media (max-width: 480px) {
+    margin-top: 10px;
+    position: fixed;
+    z-index: 100;
+    width: 100%;
+  }
 `
 
 const HomePage = () => {
@@ -102,7 +117,7 @@ const HomePage = () => {
         <SearchBar onSearch={handleSearch} />
         <CategoryBar onSearch={handleSearch}/>
       </ContainerStyled>
-      {loading && photos.length === 0 && <Spinner />}
+      {loading && photos.length === 0 && <Spinner/>}
       {error && <p style={{ textAlign: 'center' }}>{error}</p>}
 
       <PhotoGrid>

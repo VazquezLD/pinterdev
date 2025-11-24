@@ -29,12 +29,37 @@ const backdropFadeOut = keyframes`
   to { opacity: 0; }
 `;
 
+export const AppWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #19191aff;
+`;
+
+export const ContentWrapper = styled.main`
+  width: 100%;
+  max-width: 1200px;
+  padding: 2rem;
+  box-sizing: border-box;
+
+  @media (max-width: 768px) {
+    padding: 1rem;
+  }
+
+  @media (max-width: 480px){
+    padding: 0.5rem;
+  }
+`;
+
 const ButtonContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: 100px;
+  margin: 1rem 0;
+  flex-wrap: wrap;
+  gap: 0.5rem;
 `;
 
 const Overlay = styled.div`
@@ -53,11 +78,12 @@ const StyledPopUp = styled.div`
   background-color: #1c1d1f;
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 16px;
-  width: 420px;
+  width: 90%;
+  max-width: 420px;
   padding: 2rem;
   color: white;
   text-align: center;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  box-sizing: border-box;
   animation: ${({ closing }) => (closing ? fadeOut : fadeIn)} 0.25s ease forwards;
 
   h3 {
@@ -74,6 +100,7 @@ const StyledPopUp = styled.div`
     display: flex;
     gap: 1rem;
     justify-content: center;
+    flex-wrap: wrap;
   }
 `;
 
@@ -94,18 +121,30 @@ const Button = styled.button`
       variant === "danger" ? "#d62828" : "rgba(255,255,255,0.1)"};
     transform: scale(1.03);
   }
+
+  @media (max-width: 480px) {
+    width: 100%;
+    padding: 0.8rem 0;
+  }
 `;
 
 const PhotoGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 10px;
-  justify-items: start;
-  align-items: center;
   width: 100%;
-  max-width: 1200px;
   margin-top: 5px;
-  flex-wrap: wrap;
+  justify-items: center;
+
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 8px;
+  }
+
+  @media (max-width: 480px) {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
 `;
 
 const Input = styled(Field)`
@@ -116,6 +155,19 @@ const Input = styled(Field)`
   background-color: #2a2b2d;
   color: white;
   margin-bottom: 0.8rem;
+  box-sizing: border-box;
+`;
+
+const TextArea = styled(Field)`
+  width: 100%;
+  padding: 0.6rem;
+  border-radius: 8px;
+  background-color: #2a2b2d;
+  color: white;
+  margin-bottom: 0.8rem;
+  border: none;
+  box-sizing: border-box;
+  resize: vertical;
 `;
 
 const ErrorText = styled.div`
@@ -134,7 +186,6 @@ const Profile = () => {
   const { idUSer, token } = useAuth();
   const [errorMessage, setErrorMessage] = useState("");
 
-
   const deleteDataCollection = async (id) => {
     if (!token) return;
     try {
@@ -147,7 +198,6 @@ const Profile = () => {
       console.error("Error al eliminar:", error);
     }
   };
-
 
   const addCollection = async (values, { setSubmitting, resetForm }) => {
     if (!token) return;
@@ -200,7 +250,7 @@ const Profile = () => {
       .required("El título es obligatorio")
       .max(50, "Máximo 50 caracteres"),
     descripcion: Yup.string()
-      .required("La descripcion es obligatoria")
+      .required("La descripción es obligatoria")
       .max(200, "Máximo 200 caracteres"),
   });
 
@@ -209,97 +259,89 @@ const Profile = () => {
 
   return (
     <>
-    <ProfileCard/>
-      <h2>Tus Colecciones 📂</h2>
-      <ButtonContainer>
-        <Button onClick={() => setFormCol(true)}>Agregar colección</Button>
-      </ButtonContainer>
+        <ProfileCard />
+        <h2>Tus Colecciones 📂</h2>
+        <ButtonContainer>
+          <Button onClick={() => setFormCol(true)}>Agregar colección</Button>
+        </ButtonContainer>
 
-      <PhotoGrid>
-        {Array.isArray(collections) && collections.length > 0 ? (
-          collections.map((collection) => (
-            <CollectionCard
-              key={collection._id}
-              collection={collection}
-              setClicked={setClicked}
-              setIdToDelete={setIdToDelete}
-            />
-          ))
-        ) : (
-          <p>No tienes colecciones aún.</p>
+        <PhotoGrid>
+          {Array.isArray(collections) && collections.length > 0 ? (
+            collections.map((collection) => (
+              <CollectionCard
+                key={collection._id}
+                collection={collection}
+                setClicked={setClicked}
+                setIdToDelete={setIdToDelete}
+              />
+            ))
+          ) : (
+            <p>No tienes colecciones aún.</p>
+          )}
+        </PhotoGrid>
+
+        {clicked && (
+          <Overlay closing={closingDelete}>
+            <StyledPopUp closing={closingDelete}>
+              <h3>¿Eliminar colección?</h3>
+              <div className="buttons">
+                <Button onClick={handleCloseDelete}>Cancelar</Button>
+                <Button
+                  variant="danger"
+                  onClick={() => deleteDataCollection(idToDelete)}
+                >
+                  Eliminar
+                </Button>
+              </div>
+            </StyledPopUp>
+          </Overlay>
         )}
-      </PhotoGrid>
 
-      {clicked && (
-        <Overlay closing={closingDelete}>
-          <StyledPopUp closing={closingDelete}>
-            <h3>¿Eliminar colección?</h3>
-            <div className="buttons">
-              <Button onClick={handleCloseDelete}>Cancelar</Button>
-              <Button
-                variant="danger"
-                onClick={() => deleteDataCollection(idToDelete)}
+        {showFormCol && (
+          <Overlay closing={closingForm}>
+            <StyledPopUp closing={closingForm}>
+              <h3>Nueva colección</h3>
+              <Formik
+                initialValues={{ titulo: "", descripcion: "" }}
+                validationSchema={validationSchema}
+                onSubmit={addCollection}
               >
-                Eliminar
-              </Button>
-            </div>
-          </StyledPopUp>
-        </Overlay>
-      )}
+                {({ isSubmitting }) => (
+                  <Form>
+                    <Input name="titulo" placeholder="Título" />
+                    <ErrorMessage name="titulo" component={ErrorText} />
 
-      {showFormCol && (
-        <Overlay $closing={closingForm}>
-          <StyledPopUp $closing={closingForm}>
-            <h3>Nueva colección</h3>
-            <Formik
-              initialValues={{ titulo: "", descripcion: "" }}
-              validationSchema={validationSchema}
-              onSubmit={addCollection}
-            >
-              {({ isSubmitting }) => (
-                <Form>
-                  <Input name="titulo" placeholder="Título" />
-                  <ErrorMessage name="titulo" component={ErrorText} />
+                    <TextArea
+                      name="descripcion"
+                      placeholder="Descripción"
+                    />
+                    <ErrorMessage name="descripcion" component={ErrorText} />
 
-                  <Field
-                    name="descripcion"
-                    as="textarea"
-                    rows="3"
-                    placeholder="Descripción"
-                    style={{
-                      width: "100%",
-                      padding: "0.6rem",
-                      borderRadius: "8px",
-                      backgroundColor: "#2a2b2d",
-                      color: "white",
-                      marginBottom: "0.8rem",
-                      border: "none"
-                    }}
-                  />
-                  <ErrorMessage name="descripcion" component={ErrorText} />
+                    {errorMessage && (
+                      <p style={{ color: "#e63946", fontSize: "0.9rem" }}>
+                        {errorMessage}
+                      </p>
+                    )}
 
-                  {errorMessage && (
-                    <p style={{ color: "#e63946", fontSize: "0.9rem" }}>
-                      {errorMessage}
-                    </p>
-                  )}
-
-                  <div className="buttons" style={{ marginTop: "1rem" }}>
-                    <Button type="button" onClick={handleCloseForm}>
-                      Cancelar
-                    </Button>
-                    <Button type="submit" disabled={isSubmitting}>
-                      Crear
-                    </Button>
-                  </div>
-                </Form>
-              )}
-            </Formik>
-          </StyledPopUp>
-        </Overlay>
-      )}
-    </>
+                    <div className="buttons" style={{ marginTop: "1rem" }}>
+                      <Button type="button" onClick={handleCloseForm}>
+                        Cancelar
+                      </Button>
+                      <Button type="submit" disabled={isSubmitting}>
+                        Crear
+                      </Button>
+                    </div>
+                  </Form>
+                )}
+              </Formik>
+            </StyledPopUp>
+          </Overlay>
+        )}
+      </>
+    
   );
 };
 
 export default Profile;
+
+

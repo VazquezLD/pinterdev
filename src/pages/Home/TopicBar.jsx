@@ -5,11 +5,14 @@ const ButtonContainer = styled.div`
   display: flex;
   background-color: #131415;
   margin-top: 5px;
-  min-width: 600px;
+  width: 600px;
   height: 40px;
   align-items: center;
   justify-content: space-around;
   border-radius: 10px;
+  @media (max-width: 480px){
+    width: 100%;
+  }
 `;
 
 const CategoryButton = styled.button`
@@ -29,6 +32,9 @@ const CategoryButton = styled.button`
 
   &:hover {
     transform: translateY(-3px);
+  }
+  @media (max-width: 480px){
+    font-size: 10px;
   }
 `;
 

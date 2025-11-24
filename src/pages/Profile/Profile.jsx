@@ -105,6 +105,7 @@ const PhotoGrid = styled.div`
   width: 100%;
   max-width: 1200px;
   margin-top: 5px;
+  flex-wrap: wrap;
 `;
 
 const Input = styled(Field)`

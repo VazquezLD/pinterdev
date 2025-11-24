@@ -144,6 +144,7 @@ const PhotoGrid = styled.div`
   @media (max-width: 480px) {
     grid-template-columns: 1fr;
     gap: 6px;
+    padding-bottom: 120px;
   }
 `;
 

@@ -12,8 +12,8 @@ export const FormWrapper = styled.div`
     gap: 20px;
     justify-content: center;
     height: 100vh;
-    & h2{
-      color: black;
+    & p{
+      color: white;
     }
 `;
 export const StyledForm = styled(Form)`
@@ -25,7 +25,10 @@ export const StyledForm = styled(Form)`
   padding: 2rem; 
   border-radius: 8px; 
   box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  color: white;
 `;
+
+
 export const StyledField = styled(Field)`
   padding: 10px; 
   border-radius: 5px; 
@@ -35,7 +38,7 @@ export const StyledButton = styled.button`
   padding: 10px; 
   border-radius: 5px; 
   border: none; 
-  background-color: #35414e; 
+  background-color: #4c5966; 
   color: white; 
   cursor: pointer;
 `;

@@ -45,9 +45,4 @@ export function App() {
     </UserCollectionsProvider>
   );
 }
-
 export default App;
-
-
-{/*<Route path="profile/:userId" element={<ProfilePage />} />}
-{/*<Route path="collection/:collectionId" element={<CollectionDetailPage />} */}

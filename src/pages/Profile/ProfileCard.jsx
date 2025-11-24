@@ -19,6 +19,20 @@ const ProfileCardStyled = styled.div`
         line-height: 1.6;
         max-width: 900px;
     }
+    @media (max-width: 480px){
+        margin-top: 20px;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        place-content: center;
+        & h1{
+            font-size: 20px;
+        }
+        & p{
+            font-size: 12px;
+            width: 80%;
+        }
+    }
 `
 
 

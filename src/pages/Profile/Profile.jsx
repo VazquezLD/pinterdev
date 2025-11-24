@@ -123,7 +123,7 @@ const Button = styled.button`
   }
 
   @media (max-width: 480px) {
-    width: 100%;
+    width: 60%;
     padding: 0.8rem 0;
   }
 `;

@@ -88,7 +88,9 @@ const PhotoCard = ({photo, setShowPopup, setShowPopUpdelete, setPhotoIdToDelete}
       <PhotoImg src={photo.urls.regular} alt={photo.alt_description} onClick={handleClick}/>
       <ButtonsContainer>
         <ButtonContainer>
-          <CiBookmark onClick={() => {setShowPopup(true), setPhotoId(photo.id)}}/>
+          {!showDots && (
+            <CiBookmark onClick={() => {setShowPopup(true), setPhotoId(photo.id)}}/>
+          )}
         </ButtonContainer>
         {showDots && (
           <ButtonContainer>
